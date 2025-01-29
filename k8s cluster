@@ -1,0 +1,32 @@
+1.curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
+2.sudo mv /tmp/eksctl /usr/local/bin
+
+3.eksctl version
+
+4.curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+ 5.curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+ 6.echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+
+ 7.sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+ 8.chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+
+9.kubectl version --client
+
+10.sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+11.aws configure
+
+12.eksctl create cluster --name demo-ekscluster --region us-east-1 --version 1.27 --nodegroup-name linux-nodes --node-type t2.micro --nodes 2
+
+13.aws eks update-kubeconfig --name demo-ekscluster --region us-east-1
+
+14. eksctl delete cluster --name demo-ekscluster --region us-east-1
