@@ -88,3 +88,85 @@ metadata: name:prod
 
 ///////////////////////////
 *********yaml for controller*****
+
+
+
+/////////28-1-25////
+***CONFIGMAP****
+
+***1)pod.yaml***
+pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-app
+  labels:
+    app: mysql-app
+spec:
+  containers:
+    - name: mysql-app
+      image: mysql
+      ports:
+      - name: mysql
+        containerPort: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: redhat
+
+******2)config.yaml******
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-vars
+data:
+ database_name: studentapp
+ user_name: prasad
+ db_password: redhat
+
+
+****4)cm.yaml with DB name UAER name Password****
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-app
+  labels:
+    app: mysql-app
+spec:
+  containers:
+    - name: mysql-app
+      image: mysql
+      ports:
+        - name: mysql
+          containerPort: 3306
+      env:
+        - name: DB_NAME
+          valueFrom:
+            configMapkeyRef:
+              name: my-vars
+              key: database_name
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretkeyRef:
+              name: my-cred
+              key: db_password
+        - name: MYSQL_USER-NAME
+          valueFrom:
+            secretkeyRef:
+              name: my-cred
+              key: user_name
+
+
+*****3)secret.yaml contain user and password ***
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-cred
+data:
+  user_name: bXlkYXRhYmFzZQo=
+  db_password: ZGF0YS1kYXRhCg==
+
+#In this practical we can learn configmap and secret
+#Configmap use to store vairable. It is in key-value format
+#secrate use for credential of database. Those data are present in secret which can not we can show everyopen 
