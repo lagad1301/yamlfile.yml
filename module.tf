@@ -1,3 +1,9 @@
+make dir project with file wile main.tf output.tf varibale.tf
+make dir module
+make dir ec2 with file main.tf output.tf varibale.tf
+make dir vpc with file main.tf output.tf varibale.tf
+make dir subnet with file main.tf output.tf varibales.tf
+
 project/modules
    ***ec2***
 ////main.tf///
